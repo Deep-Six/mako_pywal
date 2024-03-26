@@ -5,15 +5,14 @@ MAKOCONFIG="$HOME/.config/mako/config"
 #MAKOCONFIG="/tmp/config"
 COLORS="$HOME/.cache/wal/colors"
 
-COLOR0=`head -1 $COLORS`
-COLOR1=`head -2 $COLORS | tail -1`
-COLOR2=`head -3 $COLORS | tail -1`
-COLOR3=`head -4 $COLORS | tail -1`
-COLOR4=`head -5 $COLORS | tail -1`
-COLOR5=`head -6 $COLORS | tail -1`
-COLOR6=`head -7 $COLORS | tail -1`
-
+counter=0
+while IFS= read -r line; do
+    var="COLOR$((counter++))"
+    declare "$var"="$line"
+done < $COLORS
+unset counter var
 cat << EOF > $MAKOCONFIG
+
 font=Sauce Code Pro 10
 layer=overlay
 anchor=bottom-right
